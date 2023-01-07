@@ -21,31 +21,33 @@ const theme = {
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: theme.colors.primary,
-          },
-          headerTintColor: theme.colors.surface,
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}>
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen
-          name="ClientDetails"
-          component={ClientDetails}
-          options={{title: 'Client details'}}
-        />
-        <Stack.Screen
-          name="NewClient"
-          component={NewClient}
-          options={{title: 'New client'}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <PaperProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: theme.colors.primary,
+            },
+            headerTintColor: theme.colors.surface,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen
+            name="ClientDetails"
+            component={ClientDetails}
+            options={{title: 'Client details'}}
+          />
+          <Stack.Screen
+            name="NewClient"
+            component={NewClient}
+            options={{title: 'New client'}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 };
 
