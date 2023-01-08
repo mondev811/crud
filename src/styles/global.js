@@ -12,4 +12,13 @@ export const globalStyles = StyleSheet.create({
     marginTop: 20,
     textAlign: 'center',
   },
+  fab: {
+    position: 'absolute',
+    right: 20,
+    bottom: 20,
+    borderRadius: 30,
+  },
+  warning: {
+    textAlign: 'center',
+  },
 });

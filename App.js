@@ -43,7 +43,9 @@ const App = () => {
           <Stack.Screen
             name="NewClient"
             component={NewClient}
-            options={{title: 'New client'}}
+            options={({route}) => ({
+              title: route.params.client ? 'Update client' : 'New client',
+            })}
           />
         </Stack.Navigator>
       </NavigationContainer>
@@ -52,5 +54,3 @@ const App = () => {
 };
 
 export default App;
-
-const styles = StyleSheet.create({});
