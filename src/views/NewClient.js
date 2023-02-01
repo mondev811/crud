@@ -9,6 +9,7 @@ import {
   Portal,
 } from 'react-native-paper';
 import axios from 'axios';
+import * as CONSTANTS from '../helpers/constants';
 import {globalStyles} from '../styles/global';
 
 export const NewClient = ({navigation, route}) => {
@@ -45,13 +46,13 @@ export const NewClient = ({navigation, route}) => {
       _client.id = id;
       console.log('client to override:', _client);
       try {
-        await axios.put(`http://localhost:3000/clients/${id}`, _client);
+        await axios.put(`${CONSTANTS.SERVER_URL}/clients/${id}`, _client);
       } catch (error) {
         console.log(error);
       }
     } else {
       try {
-        await axios.post('http://localhost:3000/clients', _client);
+        await axios.post(`${CONSTANTS.SERVER_URL}/clients`, _client);
       } catch (error) {
         console.log(error);
       }

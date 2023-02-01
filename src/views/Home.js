@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {Headline, List, FAB} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
+import * as CONSTANTS from '../helpers/constants';
 import {globalStyles} from '../styles/global';
 
 export const Home = () => {
@@ -13,7 +14,7 @@ export const Home = () => {
   const getClients = async () => {
     // console.log('fetching...');
     try {
-      const result = await axios.get('http://localhost:3000/clients');
+      const result = await axios.get(`${CONSTANTS.SERVER_URL}/clients`);
       setClientList(result.data);
     } catch (error) {
       // console.log(error);

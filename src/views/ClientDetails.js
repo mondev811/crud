@@ -3,6 +3,7 @@ import {StyleSheet, View, Alert} from 'react-native';
 import {Headline, Text, Subheading, Button, FAB} from 'react-native-paper';
 import {globalStyles} from '../styles/global';
 import axios from 'axios';
+import * as CONSTANTS from '../helpers/constants';
 
 export const ClientDetails = ({navigation, route}) => {
   const {id, name, phone, email, company} = route.params.item;
@@ -20,7 +21,7 @@ export const ClientDetails = ({navigation, route}) => {
   };
 
   const deleteClient = async () => {
-    const url = `http://localhost:3000/clients/${id}`;
+    const url = `${CONSTANTS.SERVER_URL}/clients/${id}`;
     try {
       await axios.delete(url);
     } catch (error) {
