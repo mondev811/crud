@@ -1,9 +1,8 @@
 import 'react-native-gesture-handler';
-import {StyleSheet} from 'react-native';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-
+import {QueryClient, QueryClientProvider} from 'react-query';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 
 import {Home, ClientDetails, NewClient} from './src/views';
@@ -19,37 +18,41 @@ const theme = {
   },
 };
 
+const queryClient = new QueryClient();
+
 const App = () => {
   return (
-    <PaperProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Home"
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: theme.colors.primary,
-            },
-            headerTintColor: theme.colors.surface,
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          }}>
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen
-            name="ClientDetails"
-            component={ClientDetails}
-            options={{title: 'Client details'}}
-          />
-          <Stack.Screen
-            name="NewClient"
-            component={NewClient}
-            options={({route}) => ({
-              title: route.params.client ? 'Update client' : 'New client',
-            })}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <QueryClientProvider client={queryClient}>
+      <PaperProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{
+              headerStyle: {
+                backgroundColor: theme.colors.primary,
+              },
+              headerTintColor: theme.colors.surface,
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}>
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen
+              name="ClientDetails"
+              component={ClientDetails}
+              options={{title: 'Client details'}}
+            />
+            <Stack.Screen
+              name="NewClient"
+              component={NewClient}
+              options={({route}) => ({
+                title: route.params.client ? 'Update client' : 'New client',
+              })}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </QueryClientProvider>
   );
 };
 
