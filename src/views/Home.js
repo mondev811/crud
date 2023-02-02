@@ -1,37 +1,24 @@
+import React from 'react';
 import {View, FlatList, Text} from 'react-native';
-import React, {useEffect, useState} from 'react';
 import {Headline, List, FAB} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
-import axios from 'axios';
-import * as CONSTANTS from '../helpers/constants';
+import {useClientsData} from '../hooks/queryHooks';
 import {globalStyles} from '../styles/global';
 
 export const Home = () => {
-  const [clientList, setClientList] = useState([]);
-  const [refreshClientList, setRefreshClientList] = useState(false);
-  const [fetchError, setFetchError] = useState(false);
-
-  const getClients = async () => {
-    // console.log('fetching...');
-    try {
-      const result = await axios.get(`${CONSTANTS.SERVER_URL}/clients`);
-      setClientList(result.data);
-    } catch (error) {
-      // console.log(error);
-      setFetchError(true);
-    }
-  };
-
-  useEffect(() => {
-    getClients();
-    setRefreshClientList(false);
-  }, [refreshClientList]);
+  const {isLoading, isError, data} = useClientsData();
+  const clientList = data?.data;
 
   const navigation = useNavigation();
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
     <View style={globalStyles.container}>
       <Headline style={globalStyles.title}>List of clients</Headline>
-      {fetchError && (
+      {isError && (
         <Text style={globalStyles.warning}>
           Error fetching data. Is the API server running?
         </Text>
@@ -51,7 +38,6 @@ export const Home = () => {
             onPress={() =>
               navigation.navigate('ClientDetails', {
                 item,
-                setRefreshClientList,
               })
             }
           />
@@ -60,11 +46,7 @@ export const Home = () => {
       <FAB
         icon="plus"
         style={globalStyles.fab}
-        onPress={() =>
-          navigation.navigate('NewClient', {
-            setRefreshClientList,
-          })
-        }
+        onPress={() => navigation.navigate('NewClient')}
       />
     </View>
   );
