@@ -46,7 +46,7 @@ const App = () => {
               name="NewClient"
               component={NewClient}
               options={({route}) => ({
-                title: route.params.client ? 'Update client' : 'New client',
+                title: route.params?.client ? 'Update client' : 'New client',
               })}
             />
           </Stack.Navigator>

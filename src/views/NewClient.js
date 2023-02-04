@@ -18,7 +18,8 @@ export const NewClient = ({navigation, route}) => {
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
   const [alert, setAlert] = useState(false);
-  const {client, setRefreshClientList} = route.params;
+
+  const client = route.params?.client;
 
   useEffect(() => {
     if (!client) {
@@ -58,7 +59,6 @@ export const NewClient = ({navigation, route}) => {
       }
     }
 
-    setRefreshClientList(true);
     navigation.navigate('Home');
 
     setName('');
