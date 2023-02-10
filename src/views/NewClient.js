@@ -8,10 +8,9 @@ import {
   Paragraph,
   Portal,
 } from 'react-native-paper';
-import axios from 'axios';
-import * as CONSTANTS from '../helpers/constants';
 import {globalStyles} from '../styles/global';
 import {useQueryClient} from '@tanstack/react-query';
+import {useAddNewClient, useUpdateClient} from '../hooks/queryHooks';
 
 export const NewClient = ({navigation, route}) => {
   const [name, setName] = useState('');
@@ -21,6 +20,8 @@ export const NewClient = ({navigation, route}) => {
   const [alert, setAlert] = useState(false);
   const queryClient = useQueryClient();
   const client = route.params?.client;
+  const updateMutation = useUpdateClient();
+  const addMutation = useAddNewClient();
 
   useEffect(() => {
     if (!client) {
@@ -47,20 +48,11 @@ export const NewClient = ({navigation, route}) => {
       const {id} = client;
       _client.id = id;
       console.log('client to override:', _client);
-      try {
-        await axios.put(`${CONSTANTS.SERVER_URL}/clients/${id}`, _client);
-      } catch (error) {
-        console.log(error);
-      }
+      updateMutation.mutate(_client);
     } else {
-      try {
-        await axios.post(`${CONSTANTS.SERVER_URL}/clients`, _client);
-      } catch (error) {
-        console.log(error);
-      }
+      addMutation.mutate(_client);
     }
 
-    queryClient.invalidateQueries({queryKey: ['clients']});
     navigation.navigate('Home');
 
     setName('');
