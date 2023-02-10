@@ -9,7 +9,6 @@ import {
   Portal,
 } from 'react-native-paper';
 import {globalStyles} from '../styles/global';
-import {useQueryClient} from '@tanstack/react-query';
 import {useAddNewClient, useUpdateClient} from '../hooks/queryHooks';
 
 export const NewClient = ({navigation, route}) => {
@@ -18,7 +17,6 @@ export const NewClient = ({navigation, route}) => {
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
   const [alert, setAlert] = useState(false);
-  const queryClient = useQueryClient();
   const client = route.params?.client;
   const updateMutation = useUpdateClient();
   const addMutation = useAddNewClient();
