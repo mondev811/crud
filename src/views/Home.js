@@ -6,7 +6,7 @@ import {useClientsData} from '../hooks/queryHooks';
 import {globalStyles} from '../styles/global';
 
 export const Home = () => {
-  const {isLoading, isError, data} = useClientsData();
+  const {isLoading, isError, data, isSuccess} = useClientsData();
   const clientList = data?.data;
 
   const navigation = useNavigation();
@@ -23,7 +23,7 @@ export const Home = () => {
           Error fetching data. Is the API server running?
         </Text>
       )}
-      {clientList.length === 0 && (
+      {isSuccess && clientList.length === 0 && (
         <Text style={globalStyles.warning}>
           There are no clients to display.
         </Text>
