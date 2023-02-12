@@ -24,7 +24,7 @@ export const useAddNewClient = () => {
   const queryClient = useQueryClient();
   const addMutation = useMutation({
     mutationFn: newClient => {
-      return axios.post(`${CONSTANTS.SERVER_URL}/clients`, newClient);
+      return apiClient.post('/clients', newClient);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['clients']});
@@ -38,7 +38,7 @@ export const useUpdateClient = () => {
   const queryClient = useQueryClient();
   const updateMutation = useMutation({
     mutationFn: client => {
-      return axios.put(`${CONSTANTS.SERVER_URL}/clients/${client.id}`, client);
+      return apiClient.put(`/clients/${client.id}`, client);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['clients']});
