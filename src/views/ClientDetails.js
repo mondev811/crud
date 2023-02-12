@@ -2,8 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Alert} from 'react-native';
 import {Headline, Text, Subheading, Button, FAB} from 'react-native-paper';
 import {globalStyles} from '../styles/global';
-import axios from 'axios';
-import * as CONSTANTS from '../helpers/constants';
+import {useDeleteClient} from '../hooks/queryHooks';
 
 export const ClientDetails = ({navigation, route}) => {
   const {id, name, phone, email, company} = route.params.item;
@@ -14,23 +13,19 @@ export const ClientDetails = ({navigation, route}) => {
       'Do you wish to delete this client?',
       'This action cannot be reversed',
       [
-        {text: 'Yes, delete it', onPress: () => deleteClient()},
+        {
+          text: 'Yes, delete it',
+          onPress: () => {
+            deleteMutation.mutate(id);
+            navigation.navigate('Home');
+          },
+        },
         {text: 'Cancel', style: 'cancel'},
       ],
     );
   };
 
-  const deleteClient = async () => {
-    const url = `${CONSTANTS.SERVER_URL}/clients/${id}`;
-    try {
-      await axios.delete(url);
-    } catch (error) {
-      console.log(error);
-    }
-    navigation.navigate('Home');
-    setRefreshClientList(true);
-  };
-
+  const deleteMutation = useDeleteClient();
   return (
     <View style={globalStyles.container}>
       <Headline style={globalStyles.title}>{name}</Headline>
