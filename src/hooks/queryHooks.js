@@ -52,7 +52,7 @@ export const useDeleteClient = () => {
   const queryClient = useQueryClient();
   const deleteMutation = useMutation({
     mutationFn: id => {
-      return axios.delete(`${CONSTANTS.SERVER_URL}/clients/${id}`);
+      return apiClient.delete(`/clients/${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['clients']});
